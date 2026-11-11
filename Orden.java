@@ -10,6 +10,7 @@ public class Orden {
     private List<Item> items;
     private Empleado empleado;
     private MedioDePago medioDePago;
+    private PoliticaDescuento descuento;
 
     public Orden(Long id, LocalDate fecha, String nota, EstadoPedido estado, Empleado empleado) {
         this.id = id;
@@ -19,6 +20,7 @@ public class Orden {
         this.items = new ArrayList<>();
         this.empleado = empleado;
         this.medioDePago = null;
+        this.descuento = new SinDescuento();
     }
 
     public List<Item> getItems() {
@@ -44,7 +46,7 @@ public class Orden {
         for (Item item : items) {
             total += item.calcularSubtotal();
         }
-        return total;
+        return descuento.aplicado(total);
     }
 
     public void agregarItem(Item item) {
@@ -79,5 +81,8 @@ public class Orden {
         this.estado = estado;
     }
 
+    public void setDescuento(PoliticaDescuento des){
+        this.descuento = des;
+    }
     
 }

@@ -57,5 +57,9 @@ public class Main {
         for (Item item : orden1.getItems()) {
             System.out.println("- " + item.getCantidad() + " x " + item.getProducto().getDescripcion() + " (Subtotal: " + item.calcularSubtotal() + ")");
         }
+
+        System.out.println(orden1.calcularTotal());
+        orden1.setDescuento(new DescuentoPorcentaje(40.0));
+        System.out.println(orden1.calcularTotal());
     }
 }

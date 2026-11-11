@@ -25,17 +25,17 @@ public class Main {
         SubCategoria subCategoria1 = new SubCategoria(1L, "Cafes", categoria1);
         SubCategoria subCategoria2 = new SubCategoria(2L, "Jugos", categoria1);
 
-        Producto producto1 = new Producto(1L, 2.5, "Café Americano");
-        Producto producto2 = new Producto(2L, 3.0, "Café Latte");
-        Producto producto3 = new Producto(3L, 4.0, "Jugo de Naranja");
-        Producto producto4 = new Producto(4L, 3.5, "Jugo de Manzana");
+        ProductoSimple producto1 = new ProductoSimple(1L, 2.5, "Café Americano");
+        ProductoSimple producto2 = new ProductoSimple(2L, 3.0, "Café Latte");
+        ProductoSimple producto3 = new ProductoSimple(3L, 4.0, "Jugo de Naranja");
+        ProductoSimple producto4 = new ProductoSimple(4L, 3.5, "Jugo de Manzana");
 
         subCategoria1.agregarProducto(producto1);
         subCategoria1.agregarProducto(producto2);
         subCategoria1.agregarProducto(producto3);
         subCategoria2.agregarProducto(producto4);
 
-        Item item1 = new Item("Para llevar", 2, producto1);
+        Item item1 = new Item("Para llevar", 2, new ConCaramelo(new ConLeche(producto1)));
         Item item2 = new Item("Para llevar", 1, producto3);
         Item item3 = new Item("Para llevar", 3, producto4);
 
@@ -53,5 +53,9 @@ public class Main {
         System.out.println("Estado de la orden: " + orden1.getEstado());
         System.out.println("Empleado que atendió la orden: " + orden1.getEmpleado().getNombre());
         System.out.println("Medio de pago: " + orden1.getMedioDePago().getTipoPago());
+        System.out.println("Items de la orden:");
+        for (Item item : orden1.getItems()) {
+            System.out.println("- " + item.getCantidad() + " x " + item.getProducto().getDescripcion() + " (Subtotal: " + item.calcularSubtotal() + ")");
+        }
     }
 }

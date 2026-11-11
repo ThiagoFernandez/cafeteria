@@ -5,7 +5,7 @@ public class SubCategoria {
     private Long id;
     private String nombre;
     private Categoria categoria;
-    private List<Producto> productos;
+    private List<ProductoSimple> productos;
 
     public SubCategoria(Long id, String nombre, Categoria categoria) {
         this.id = id;
@@ -14,7 +14,7 @@ public class SubCategoria {
         this.productos = new ArrayList<>();
     }
 
-    public void agregarProducto(Producto producto) {
+    public void agregarProducto(ProductoSimple producto) {
         productos.add(producto);
     }
 
@@ -30,11 +30,11 @@ public class SubCategoria {
         this.categoria = categoria;
     }
 
-    public List<Producto> getProductos() {
+    public List<ProductoSimple> getProductos() {
         return productos;
     }
 
-    public void setProductos(List<Producto> productos) {
+    public void setProductos(List<ProductoSimple> productos) {
         this.productos = productos;
     }
 

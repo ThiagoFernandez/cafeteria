@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
@@ -10,5 +11,13 @@ public class Main {
 
         System.out.println("Subtotal Item 1: " + item1.calcularSubtotal());
         System.out.println("Subtotal Item 2: " + item2.calcularSubtotal());
+
+        Orden orden = new Orden(1L, LocalDate.now(), "Nota de la orden", EstadoPedido.RECIBIDO);
+        orden.agregarItem(item1);
+        orden.agregarItem(item2);
+        Orden vacia = new Orden(9L, LocalDate.now(), "", EstadoPedido.RECIBIDO);
+        System.out.println("Orden vacia: " + vacia.calcularTotal());   // esperado: 0.0
+        System.out.println("Total Orden: " + orden.calcularTotal());   // esperado: 80.0
+        System.out.println("Total Orden: " + orden.calcularTotal());
     }   
 }

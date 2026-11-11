@@ -8,13 +8,36 @@ public class Orden {
     private String nota;
     private EstadoPedido estado;
     private List<Item> items;
+    private Empleado empleado;
+    private MedioDePago medioDePago;
 
-    public Orden(Long id, LocalDate fecha, String nota, EstadoPedido estado) {
+    public Orden(Long id, LocalDate fecha, String nota, EstadoPedido estado, Empleado empleado) {
         this.id = id;
         this.fecha = fecha;
         this.nota = nota;
         this.estado = estado;
         this.items = new ArrayList<>();
+        this.empleado = empleado;
+        this.medioDePago = null;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+    public MedioDePago getMedioDePago() {
+        return medioDePago;
+    }
+    public void setMedioDePago(MedioDePago medioDePago) {
+        this.medioDePago = medioDePago;
     }
     public double calcularTotal() {
         double total = 0.0;
@@ -30,10 +53,6 @@ public class Orden {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public LocalDate getFecha() {

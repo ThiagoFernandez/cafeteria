@@ -1,14 +1,20 @@
 public class Caja {
     // juega de facade por su estructura y de controller por su comportamiento
-    private double total;
-    
-    public Caja(Orden orden) {
-        this.total = orden.calcularTotal();
+
+    public Caja(){}
+
+    public void cobrar(Order orden){
+        double total = orden.calcularTotal();
+
+        orden.setEstado(EstadoPedido.EN_PREPARACION);
+        imprimirComprobante(orden, total);
     }
 
-    public registrarCobro(MedioDePago medioDePago) {
-        // Lógica para registrar el cobro utilizando el medio de pago proporcionado
-        // Por ejemplo, podrías llamar a un método en el objeto MedioDePago para procesar el pago
-        medioDePago.procesarPago(total);
+    private void imprimirComprobante(Order orden, double total){
+        for (Item item : orden.getItems()) {
+            System.out.println("- "+item.getProducto().getPrecio()+" "+item.getProducto().getDescripcion()+" x "+item.getCantidad());
+        }
+        System.out.println("Total: "+total);
+        System.out.println("Medio de pago: "+orden.getTipoPago());
     }
 }

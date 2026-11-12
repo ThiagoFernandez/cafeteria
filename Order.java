@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Orden {
+public class Order {
     private Long id;
     private LocalDate fecha;
     private String nota;
@@ -12,15 +12,23 @@ public class Orden {
     private MedioDePago medioDePago;
     private PoliticaDescuento descuento;
 
-    public Orden(Long id, LocalDate fecha, String nota, EstadoPedido estado, Empleado empleado) {
+    public Order(Long id, LocalDate fecha, String nota, EstadoPedido estado, Empleado empleado) {
         this.id = id;
         this.fecha = fecha;
         this.nota = nota;
         this.estado = estado;
         this.items = new ArrayList<>();
         this.empleado = empleado;
-        this.medioDePago = null;
+        this.medioDePago = new MedioDePago(TipoPago.EFECTIVO);
         this.descuento = new SinDescuento();
+    }
+
+    public TipoPago getTipoPago() {
+        return this.medioDePago.getTipoPago();
+    }
+
+    public void setTipoPago(TipoPago tipoPago) {
+        this.medioDePago.setTipoPago(tipoPago);
     }
 
     public List<Item> getItems() {

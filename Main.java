@@ -35,31 +35,21 @@ public class Main {
         subCategoria1.agregarProducto(producto3);
         subCategoria2.agregarProducto(producto4);
 
-        Item item1 = new Item("Para llevar", 2, new ConCaramelo(new ConLeche(producto1)));
+        Item item1 = new Item("Para llevar", 2, new ConCaramelo(new ConLeche(producto1))); // decorator
         Item item2 = new Item("Para llevar", 1, producto3);
         Item item3 = new Item("Para llevar", 3, producto4);
 
-        MedioDePago medioDePago = new MedioDePago(TipoPago.EFECTIVO);
-
-        Orden orden1 = new Orden(1L, LocalDate.now(), "Orden de prueba", EstadoPedido.RECIBIDO, empleado1);
+        Order orden1 = new Order(1L, LocalDate.now(), "Orden de prueba", EstadoPedido.RECIBIDO, empleado1);
 
         orden1.agregarItem(item1);
         orden1.agregarItem(item2);
         orden1.agregarItem(item3);
 
-        orden1.setMedioDePago(medioDePago);
+        orden1.setDescuento(new DescuentoPorcentaje(10.0)); // strategy
 
-        System.out.println("Total de la orden: " + orden1.calcularTotal());
-        System.out.println("Estado de la orden: " + orden1.getEstado());
-        System.out.println("Empleado que atendió la orden: " + orden1.getEmpleado().getNombre());
-        System.out.println("Medio de pago: " + orden1.getMedioDePago().getTipoPago());
-        System.out.println("Items de la orden:");
-        for (Item item : orden1.getItems()) {
-            System.out.println("- " + item.getCantidad() + " x " + item.getProducto().getDescripcion() + " (Subtotal: " + item.calcularSubtotal() + ")");
-        }
+        Caja caja = new Caja();
 
-        System.out.println(orden1.calcularTotal());
-        orden1.setDescuento(new DescuentoPorcentaje(40.0));
-        System.out.println(orden1.calcularTotal());
+        caja.cobrar(orden1); // facade y controller
+
     }
 }

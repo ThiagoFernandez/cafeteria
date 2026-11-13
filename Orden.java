@@ -24,22 +24,12 @@ public class Orden {
     }
 
     public void avanzar(){
-        try {
-            EstadoOrden nuevoEstado = estado.avanzar();
-            this.estado = nuevoEstado;
-        } catch (IllegalStateException e) {
-            System.out.println("No se puede avanzar la orden en el estado actual: " + e.getMessage());
-        }
+        this.estado = estado.avanzar();
         
     }
 
     public void cancelar(){
-        try {
-            EstadoOrden nuevoEstado = estado.cancelar();
-            this.estado = nuevoEstado;
-        } catch (IllegalStateException e) {
-            System.out.println("No se puede cancelar la orden en el estado actual: " + e.getMessage());
-        }
+        this.estado = estado.cancelar();
     }
 
     public TipoPago getTipoPago() {

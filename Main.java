@@ -54,11 +54,21 @@ public class Main {
         caja.cobrar(orden1); // facade y controller
 
         System.out.println("Estado de la orden después de cobrar: "+orden1.getEstadoString()); // state
-        orden1.avanzar(); // Avanza al siguiente estado (ENTREGADO)
+        try {
+            orden1.avanzar(); // Avanza al siguiente estado (ENTREGADO)
+        } catch (IllegalStateException e) {
+            System.out.println("No se puede cancelar la orden en el estado actual: " + e.getMessage());
+        }
         System.out.println("Estado de la orden después de entregar: "+orden1.getEstadoString()); // state
 
         // vemos el fallo de cancelar una orden que ya fue entregada
         System.out.println("Intentando cancelar la orden después de entregarla:");
-        orden1.cancelar(); // Intenta cancelar la orden (no debería permitirlo)
+        try {
+            orden1.cancelar(); // Intenta cancelar la orden (no debería permitirlo)
+        } catch (IllegalStateException e) {
+            System.out.println("No se puede cancelar la orden en el estado actual: " + e.getMessage());
+        }
+        
+        
     }
 }

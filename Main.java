@@ -53,9 +53,16 @@ public class Main {
 
         caja.cobrar(orden1); // facade y controller
 
+        // observer
+        PantallaCocina pantallaCocina = new PantallaCocina();
+        PantallaBarra pantallaBarra = new PantallaBarra();
+
+        orden1.agregarPantalla(pantallaCocina);
+        orden1.agregarPantalla(pantallaBarra);
+
         System.out.println("Estado de la orden después de cobrar: "+orden1.getEstadoString()); // state
         try {
-            orden1.avanzar(); // Avanza al siguiente estado (ENTREGADO)
+            orden1.avanzar(); // Avanza al siguiente state (ENTREGADO)
         } catch (IllegalStateException e) {
             System.out.println("No se puede cancelar la orden en el estado actual: " + e.getMessage());
         }

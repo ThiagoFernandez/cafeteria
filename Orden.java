@@ -11,6 +11,7 @@ public class Orden {
     private Empleado empleado;
     private MedioDePago medioDePago;
     private PoliticaDescuento descuento;
+    private List<Pantalla> pantallas;
 
     public Orden(Long id, LocalDate fecha, String nota, EstadoOrden estado, Empleado empleado) {
         this.id = id;
@@ -21,15 +22,31 @@ public class Orden {
         this.empleado = empleado;
         this.medioDePago = new MedioDePago(TipoPago.EFECTIVO);
         this.descuento = new SinDescuento();
+        this.pantallas = new ArrayList<>();
+    }
+
+    public void agregarPantalla(Pantalla pantalla) {
+        pantallas.add(pantalla);
+    }
+
+    public void borrarPantalla(Pantalla pantalla) {
+        pantallas.remove(pantalla);
+    }
+
+    private void notificarPantallas() {
+        for (Pantalla pantalla : pantallas) {
+            pantalla.escuchar(this);
+        }
     }
 
     public void avanzar(){
         this.estado = estado.avanzar();
-        
+        notificarPantallas();
     }
 
     public void cancelar(){
         this.estado = estado.cancelar();
+        notificarPantallas();
     }
 
     public TipoPago getTipoPago() {

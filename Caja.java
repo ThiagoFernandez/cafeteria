@@ -3,14 +3,14 @@ public class Caja {
 
     public Caja(){}
 
-    public void cobrar(Order orden){
+    public void cobrar(Orden orden){
         double total = orden.calcularTotal();
 
-        orden.setEstado(EstadoPedido.EN_PREPARACION);
+        orden.avanzar(); // Avanza al siguiente estado (EN_PREPARACION);
         imprimirComprobante(orden, total);
     }
 
-    private void imprimirComprobante(Order orden, double total){
+    private void imprimirComprobante(Orden orden, double total){
         for (Item item : orden.getItems()) {
             System.out.println("- "+item.getProducto().getPrecio()+" "+item.getProducto().getDescripcion()+" x "+item.getCantidad());
         }

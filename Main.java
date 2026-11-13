@@ -39,7 +39,7 @@ public class Main {
         Item item2 = new Item("Para llevar", 1, producto3);
         Item item3 = new Item("Para llevar", 3, producto4);
 
-        Order orden1 = new Order(1L, LocalDate.now(), "Orden de prueba", EstadoPedido.RECIBIDO, empleado1);
+        Orden orden1 = new Orden(1L, LocalDate.now(), "Orden de prueba", new Recibido(), empleado1);
 
         orden1.agregarItem(item1);
         orden1.agregarItem(item2);
@@ -49,7 +49,16 @@ public class Main {
 
         Caja caja = new Caja();
 
+        System.out.println("Estado inicial de la orden: "+orden1.getEstadoString()); // state
+
         caja.cobrar(orden1); // facade y controller
 
+        System.out.println("Estado de la orden después de cobrar: "+orden1.getEstadoString()); // state
+        orden1.avanzar(); // Avanza al siguiente estado (ENTREGADO)
+        System.out.println("Estado de la orden después de entregar: "+orden1.getEstadoString()); // state
+
+        // vemos el fallo de cancelar una orden que ya fue entregada
+        System.out.println("Intentando cancelar la orden después de entregarla:");
+        orden1.cancelar(); // Intenta cancelar la orden (no debería permitirlo)
     }
 }

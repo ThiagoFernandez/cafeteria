@@ -2,17 +2,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order {
+public class Orden {
     private Long id;
     private LocalDate fecha;
     private String nota;
-    private EstadoPedido estado;
+    private EstadoOrden estado;
     private List<Item> items;
     private Empleado empleado;
     private MedioDePago medioDePago;
     private PoliticaDescuento descuento;
 
-    public Order(Long id, LocalDate fecha, String nota, EstadoPedido estado, Empleado empleado) {
+    public Orden(Long id, LocalDate fecha, String nota, EstadoOrden estado, Empleado empleado) {
         this.id = id;
         this.fecha = fecha;
         this.nota = nota;
@@ -21,6 +21,25 @@ public class Order {
         this.empleado = empleado;
         this.medioDePago = new MedioDePago(TipoPago.EFECTIVO);
         this.descuento = new SinDescuento();
+    }
+
+    public void avanzar(){
+        try {
+            EstadoOrden nuevoEstado = estado.avanzar();
+            this.estado = nuevoEstado;
+        } catch (IllegalStateException e) {
+            System.out.println("No se puede avanzar la orden en el estado actual: " + e.getMessage());
+        }
+        
+    }
+
+    public void cancelar(){
+        try {
+            EstadoOrden nuevoEstado = estado.cancelar();
+            this.estado = nuevoEstado;
+        } catch (IllegalStateException e) {
+            System.out.println("No se puede cancelar la orden en el estado actual: " + e.getMessage());
+        }
     }
 
     public TipoPago getTipoPago() {
@@ -81,13 +100,14 @@ public class Order {
         this.nota = nota;
     }
 
-    public EstadoPedido getEstado() {
+    public EstadoOrden getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoPedido estado) {
-        this.estado = estado;
+    public String getEstadoString() {
+        return estado.getClass().getSimpleName();
     }
+
 
     public void setDescuento(PoliticaDescuento des){
         this.descuento = des;
